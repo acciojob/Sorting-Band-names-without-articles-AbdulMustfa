@@ -1,17 +1,27 @@
-//your code here
-def sort_bands(band_names):
 
-    articles = ['a', 'an', 'the']
+const bandNames = ['The Beatles', 'Led Zeppelin', 'Pink Floyd', 'Aerosmith', 'Anthrax'];
 
-    strip_articles = lambda name: ' '.join(word for word in name.split() if word.lower() not in articles)
+function sortBands(bands) {
 
-    sorted_bands = sorted(band_names, key=strip_articles)
+  const articles = ['a', 'an', 'the'];
 
-    return sorted_bands
-band_names = ['The Beatles', 'Led Zeppelin', 'Pink Floyd', 'Aerosmith', 'Anthrax']
-sorted_bands = sort_bands(band_names)
-print('<ul id="band">')
-for band in sorted_bands:
-    print(f'<li>{band}</li>')
-print('</ul>')
+  function stripArticles(name) {
+    return name.split(' ').filter(word => !articles.includes(word.toLowerCase())).join(' ');
+  }
 
+  const sortedBands = bands.sort((a, b) => stripArticles(a).localeCompare(stripArticles(b)));
+
+  return sortedBands;
+}
+
+const sortedBands = sortBands(bandNames);
+
+const bandList = document.getElementById('band');
+
+const ul = document.createElement('ul');
+sortedBands.forEach(band => {
+  const li = document.createElement('li');
+  li.textContent = band;
+  ul.appendChild(li);
+});
+bandList.appendChild(ul);
